@@ -40,3 +40,9 @@ Init and run instance:
 Rebuild and run instance:
 
 `npm run docker-rebuild`
+
+## Screenshots
+
+![screenshot](https://cldup.com/lxcfTPVn-d-1200x1200.png)
+
+![screenshot](https://cldup.com/zLS9smEpof-3000x3000.png)
