@@ -1,16 +1,25 @@
-# google-permissions
-Authenticate users with Google asking for platform permissions. Starter app.
+# code-fighter
+Fight against other developters commanding your hero with JavaScript!
 
-## Setup
+## Notes
 
-```
-git clone https://github.com/codealchemist/google-permissions
-cd google-permissions
-npm install
-```
+`code-fighter` is work in progress!
+This is the first sketch on the idea.
+We still need to think about lots of stuff.
 
-After installing all dependencies the git remote will be removed.
-From there you can start working on your own stuff and add your own repository.
+## TODO
+
+- Think about loading your player (the algorithm that fights aginst other players).
+- Think about selecting oponents.
+- Think about having multiple maps / games.
+- Think about a limited API to be exposed to players.
+- Count points.
+- Add different kinds of attacks and defenses.
+- Add level bots, obstacles, resources.
+
+## Google auth built-in
+
+Uses [google-permissions](https://github.com/codealchemist/google-permissions) to authenticate with Google.
 
 ## Set Credentials
 
@@ -31,15 +40,3 @@ Init and run instance:
 Rebuild and run instance:
 
 `npm run docker-rebuild`
-
-## Why?
-
-I wanted a small starter app with Docker integration to easily setup Google logins.
-
-Enjoy!
-
-## Reference
-
-This work is based on this great example from Google:
-
-https://github.com/GoogleCloudPlatform/nodejs-getting-started/tree/master/4-auth
