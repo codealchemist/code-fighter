@@ -1,0 +1,193 @@
+:focus {
+  outline: none;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+a {
+  color: #149BCC;
+  text-decoration: none;
+}
+
+a:hover {
+  opacity: 0.7;
+}
+
+body {
+  background: black;
+  color: #444;
+  overflow: hidden;
+  font: 16px Raleway;
+}
+
+h1 {
+  font-family: 'Dancing Script', cursive;
+  font-weight: 400;
+  color: #555;
+  margin: 0 20px 20px;
+  text-align: center;
+  font-size: 40px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 20px;
+  z-index: 100;
+}
+
+b {
+  color: white;
+}
+
+p {
+  line-height: 18px;
+}
+
+pre {
+  color: palevioletred;
+  font-size: 12px;
+}
+
+#main-container {
+  color: #999;
+}
+
+.error-container {
+  padding: 20px;
+}
+
+.bg1 {
+  background-color: #222;
+}
+
+.center {
+  margin: auto;
+}
+
+.abs-center {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.abs-bottom-center {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.abs-bottom-right {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  margin: auto;
+}
+
+.abs-top-right {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  margin: auto;
+}
+
+.rounded {
+  border-radius: 5px;
+}
+
+.circle {
+  border-radius: 50%;
+}
+
+.big-content {
+  width: 50%;
+  height: 120px;
+  border: 0;
+  padding: 10px;
+}
+
+footer {
+  color: #555;
+  z-index: 100;
+}
+
+footer p {
+  text-align: center;
+}
+
+.appear {
+  transition: 1s;
+  animation-duration: 5s;
+  animation-name: appear;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Space out content a bit */
+body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.footer {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Custom page header */
+.header {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+/* Make the masthead heading the same height as the navigation */
+.header h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 40px;
+  padding-bottom: 19px;
+}
+
+/* Custom page footer */
+.footer {
+  padding-top: 19px;
+  color: #777;
+  border-top: 1px solid #e5e5e5;
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  .container {
+    max-width: 730px;
+  }
+
+  /* Remove the padding we set earlier */
+  .header,
+  .footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 30px;
+  }
+}

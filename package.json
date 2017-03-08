@@ -1,0 +1,50 @@
+{
+  "name": "code-fighter",
+  "version": "1.0.0",
+  "description": "Fight against other developters commanding your hero with JavaScript!",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard && mocha",
+    "test-focus": "standard-focus",
+    "start": "node src/index.js",
+    "monitor": "nodemon src/index.js",
+    "docker-start": "./docker-start.sh",
+    "docker-rebuild": "./docker-start.sh rebuild"
+  },
+  "keywords": [
+    "code",
+    "fight",
+    "game"
+  ],
+  "author": "Alberto Miranda",
+  "repository": "codealchemist/google-permissions",
+  "license": "MIT",
+  "dependencies": {
+    "ejs": "^2.5.6",
+    "express": "^4.14.1",
+    "express-session": "^1.15.1",
+    "googleapis": "^17.1.0",
+    "nconf": "^0.8.4",
+    "passport": "^0.3.2",
+    "passport-google-oauth20": "^1.0.0"
+  },
+  "devDependencies": {
+    "proxyquire": "^1.7.11",
+    "sinon": "^1.17.7",
+    "standard": "^8.6.0",
+    "standard-focus": "^1.1.1",
+    "supertest": "^3.0.0"
+  },
+  "standard": {
+    "globals": [
+      "beforeEach",
+      "describe",
+      "it",
+      "bean",
+      "p5"
+    ],
+    "ignore": [
+      "src/public/js/lib/**"
+    ]
+  }
+}

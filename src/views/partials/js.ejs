@@ -1,0 +1,17 @@
+<script src="//alertifyjs.com/build/alertify.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bean/1.0.15/bean.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/systemjs/0.20.9/system.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bean/1.0.15/bean.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/p5.js"></script>
+
+<script>
+  SystemJS.config({
+    'baseURL': 'js',
+    map: {
+      'plugin-babel': 'lib/plugin-babel.js',
+      'systemjs-babel-build': 'lib/systemjs-babel-browser.js'
+    },
+    transpiler: 'plugin-babel'
+  });
+  SystemJS.import("main.js");
+</script>
