@@ -3,27 +3,11 @@ export default class PedrinGaul {
     this.captured = false
   }
 
-  draw (data) {
-    if (this.captured) return
-    this.collisionHandler(data)
-    this.randomMovement(data)
-
-    if (data.ship.distance(data.oponentPosition) < 120) {
-      this.escape(data)
-    }
-  }
-
-  randomMovement (data) {
-    if (data.cycles === 0) data.ship.randomMovement()
-    data.ship.repeatLastMovement()
-  }
-
-  collisionHandler (data) {
-    if (!data.ship.collision(data.oponentPosition)) return
-
-    data.ship.color = 'red'
-    this.captured = true
-    console.log('We lost!')
+  update (data) {
+    // if (this.captured) return
+    // if (data.ship.distance(data.oponentPosition) < 120) {
+    //   this.escape(data)
+    // }
   }
 
   escape (data) {

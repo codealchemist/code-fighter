@@ -1,7 +1,5 @@
 import El from './el.js'
 import Arena from './arena.js'
-import GarvenDreis from './players/garven-dreis.js'
-import PedrinGaul from './players/pedrin-gaul.js'
 
 export default class App {
   constructor () {
@@ -11,14 +9,8 @@ export default class App {
     this.$loading = new El('loading')
     this.$welcome = new El('welcome')
 
-    // Set demo players.
-    const players = [
-      new GarvenDreis(),
-      new PedrinGaul()
-    ]
-
     // Create arena adding players to it.
-    this.arena = new Arena(players)
+    this.arena = new Arena()
 
     this.setEvents()
   }
@@ -66,4 +58,5 @@ export default class App {
       }
     })
   }
+
 }

@@ -1,7 +1,6 @@
-import Ship from './ship.js'
 
 export default class Arena {
-  constructor (players) {
+  constructor () {
     this.shipADefaults = {
       diameter: 40,
       color: 'green',
@@ -21,39 +20,45 @@ export default class Arena {
     this.cyclesLow = -16
     this.cycles = this.cyclesLow
 
-    this.playerA = players[0]
-    this.playerB = players[1]
+    this.elements = []
   }
 
   init () {
-    this.p = new p5((p) => { // eslint-disable-line
-      this.initP5(p)
+    setInterval(() => { this.update() }, 1)
+    this.initP5()
+  }
 
-      this.shipA = new Ship(p, this.shipADefaults)
-      this.shipB = new Ship(p, this.shipBDefaults)
+  initP5 () {
+    new p5((p) => { // eslint-disable-line
+      p.setup = () => {
+        p.createCanvas(window.innerWidth, window.innerHeight)
+        p.strokeWeight(0)
+      }
+
+      p.draw = () => {
+        p.fill(p.color('red'))
+        p.ellipse(10, 10, 40)
+
+        this.draw(p)
+      }
     })
-  }
-
-  initP5 (p) {
-    this.p = p
-    p.setup = () => {
-      this.setup(p)
-    }
-
-    p.draw = () => {
-      this.draw(p)
-    }
-  }
-
-  setup (p) {
-    p.createCanvas(p.displayWidth, window.innerHeight)
-    p.strokeWeight(0)
   }
 
   draw (p) {
     p.background(0)
-    this.drawPlayers(p)
-    this.updateCycles()
+
+    for (var i = 0; i < this.elements.length; i++) {
+      this.elements[i].draw(p)
+    }
+  }
+
+  update () {
+    // this.updateCycles()
+    if (this.elements) {
+      for (var i = 0; i < this.elements.length; i++) {
+        this.elements[i].update(this.getStatus(this.elements[i]))
+      }
+    }
   }
 
   updateCycles () {
@@ -63,20 +68,24 @@ export default class Arena {
     this.cycles = this.cyclesLow
   }
 
-  drawPlayers (p) {
-    this.shipA.draw(p)
-    this.shipB.draw(p)
+  addShip (ship) {
+    this.elements.push(ship)
+  }
+  removeShip (ship) {
+    this.elements.splice(this.elements.indexOf(ship), 1)
+  }
+  getStatus (ship) {
+    var resp = {
 
-    this.playerA.draw({
-      ship: this.shipA,
-      oponentPosition: this.shipB.getPosition(),
       cycles: this.cycles
-    })
-
-    this.playerB.draw({
-      ship: this.shipB,
-      oponentPosition: this.shipA.getPosition(),
-      cycles: this.cycles
-    })
+    }
+    if (this.elements.indexOf(ship)) {
+      resp.ship = this.elements[0]
+      resp.oponentPosition = this.elements[1].getPosition()
+    } else {
+      resp.ship = this.elements[1]
+      resp.oponentPosition = this.elements[0].getPosition()
+    }
+    return resp
   }
 }

@@ -1,6 +1,5 @@
 export default class Ship {
-  constructor (p, {x, y, diameter, color, name, energy}) {
-    this.p = p
+  constructor ({x, y, diameter, color, name, energy, player}) {
     this.name = name
     this.energy = energy
     this.color = color
@@ -11,6 +10,7 @@ export default class Ship {
     ]
     this.lastMovement
     this.lastMovementAmount
+    this.player = player
   }
 
   getPosition () {
@@ -79,6 +79,21 @@ export default class Ship {
     // Draw center.
     this.p.fill(this.p.color('white'))
     this.p.ellipse(x, y, this.diameter / 4)
+  }
+
+  update (arenaStatus) {
+    this.player.update()
+
+    this.collisionHandler(arenaStatus)
+    this.randomMovement(arenaStatus)
+  }
+
+  collisionHandler (data) {
+    if (!data.ship.collision(data.oponentPosition)) return
+
+    data.ship.color = 'red'
+    this.captured = true
+    console.log('We lost!')
   }
 
   repeatLastMovement () {

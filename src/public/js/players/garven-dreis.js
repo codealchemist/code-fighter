@@ -1,16 +1,17 @@
 export default class GarvenDreis {
-  constructor () {
+  constructor (ship) {
     this.won = false
+    this.ship = ship
   }
 
-  draw (data) {
-    if (this.won) return
-    this.collisionHandler(data)
-    this.followOponent(data)
+  update (data) {
+    // if (this.won) return
+    // this.collisionHandler(data)
+    // this.followOponent(data)
   }
 
   collisionHandler (data) {
-    if (!data.ship.collision(data.oponentPosition)) return
+    if (!this.ship.collision(data.oponentPosition)) return
 
     data.ship.color = 'yellow'
     this.won = true
