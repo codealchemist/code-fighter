@@ -15,9 +15,8 @@ for (var i = 0; i < 5; i++) {
   ships.push(new Ship({
     diameter: 40,
     color: 'blue',
-    x: 520,
-    y: 620,
-    player: players[Math.floor(Math.random() * 2)]
+    // player: players[Math.floor(Math.random() * 2)]
+    player: players[1]
   }))
   app.arena.addShip(ships[ships.length - 1])
 }
