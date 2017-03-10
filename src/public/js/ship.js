@@ -10,13 +10,15 @@ export default class Ship {
       maxAceleration: 10,
       weight: 10,
       maxVelocity: 100,
-      maxAngularVelocity: 10,
-      maxEnergy: 5
+      maxAngularVelocity: 100,
+      maxEnergy: 5,
+      reloadingTime: 1000 // in ms
     }
 
     this.userProperties = {
       aceleration: 0,
-      rotate: 0
+      rotate: 0,
+      fire: false
     }
 
     this.player = player
@@ -24,10 +26,9 @@ export default class Ship {
 
   draw (p, {x, y, direction}) {
     this.p = this.p || p
+    this.p.strokeWeight(0)
     this.p.fill(this.p.color(this.color))
     this.p.ellipse(x, y, this.diameter)
-
-    // todo, draw the direction
 
     // Draw center.
     this.p.fill(this.p.color('white'))
@@ -36,6 +37,7 @@ export default class Ship {
     this.p.fill(this.p.color('red'))
     this.p.ellipse(x, y, 10, 10)
 
+    // Draw direction
     this.p.fill(204)
     this.p.triangle(
       x + this.diameter / 2 * Math.cos(direction + 45), y + this.diameter / 2 * Math.sin(direction + 45),

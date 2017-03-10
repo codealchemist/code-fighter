@@ -1,3 +1,4 @@
+import Bullet from './bullet.js'
 
 export default class Arena {
   constructor () {
@@ -45,10 +46,15 @@ export default class Arena {
 
   update (elapsedTime) {
     // this.updateCycles()
-    for (var i = 0; i < this.elements.length; i++) {
-      switch (this.elements[i].type) {
+
+    for (let element in this.elements) {
+      let currentElement = this.elements[element]
+      switch (currentElement.type) {
         case 'ship':
-          this.updateShip(elapsedTime, this.elements[i])
+          this.updateShip(elapsedTime, currentElement)
+          break
+        case 'bullet':
+          this.updateBullet(elapsedTime, currentElement)
           break
       }
     }
@@ -77,16 +83,53 @@ export default class Arena {
     element.state.velocity += element.ship.intrinsicProperties.maxVelocity * element.ship.userProperties.aceleration * (elapsedTime / 1000)
     element.state.angularVelocity += element.ship.intrinsicProperties.maxAngularVelocity * element.ship.userProperties.rotate * (elapsedTime / 1000)
 
-    if (Math.abs(element.state.angularVelocity) > element.ship.intrinsicProperties.maxAngularVelocity) {
-      element.state.angularVelocity = element.ship.intrinsicProperties.maxAngularVelocity * Math.sign(element.state.angularVelocity)
-    }
     if (Math.abs(element.state.velocity) > element.ship.intrinsicProperties.maxVelocity) {
       element.state.velocity = element.ship.intrinsicProperties.maxVelocity * Math.sign(element.state.velocity)
+    }
+
+    // if the velocity = max then maxAngularVelocity = maxAngularVelocity / 4
+    const maxAngRelativeToVelocity = (-(3 / 4) * (element.ship.intrinsicProperties.maxAngularVelocity / element.ship.intrinsicProperties.maxVelocity) * element.state.velocity + element.ship.intrinsicProperties.maxAngularVelocity)
+    if (Math.abs(element.state.angularVelocity) > maxAngRelativeToVelocity) {
+      element.state.angularVelocity = maxAngRelativeToVelocity * Math.sign(element.state.angularVelocity)
     }
 
     element.state.x += element.state.velocity * Math.cos(element.state.direction) * (elapsedTime / 1000)
     element.state.y += element.state.velocity * Math.sin(element.state.direction) * (elapsedTime / 1000)
     element.state.direction += element.state.angularVelocity * (elapsedTime / 10000)
+
+    // fire if is not reloading and the player want to fire
+    if (!element.state.reloadingBullet && element.ship.userProperties.fire) {
+      element.ship.userProperties.fire = false
+      element.state.reloadingBullet = element.ship.intrinsicProperties.reloadingTime
+
+      this.elements.push({
+        type: 'bullet',
+        bullet: new Bullet(element.state),
+        state: {
+          x: element.state.x,
+          y: element.state.y,
+          direction: element.state.direction,
+          velocity: 500
+        }
+      })
+    }
+    element.state.reloadingBullet -= elapsedTime
+    if (element.state.reloadingBullet < 0) {
+      delete element.state.reloadingBullet
+    }
+  }
+  updateBullet (elapsedTime, element) {
+    element.state.x += element.state.velocity * Math.cos(element.state.direction) * (elapsedTime / 1000)
+    element.state.y += element.state.velocity * Math.sin(element.state.direction) * (elapsedTime / 1000)
+
+    if (this.p.mag(
+      element.state.x - element.bullet.intrinsicProperties.initialX,
+      element.state.y - element.bullet.intrinsicProperties.initialY,
+      ) > element.bullet.intrinsicProperties.maxDistance) {
+      // kill the bullet
+
+      this.elements.splice(this.elements.indexOf(element), 1)
+    }
   }
 
   addShip (ship) {
@@ -97,7 +140,7 @@ export default class Arena {
         // initial values of a ship
         x: Math.floor(Math.random() * window.innerWidth),
         y: Math.floor(Math.random() * window.innerHeight),
-        direction: 76, // from 0 to 360
+        direction: Math.floor(Math.random() * 360), // from 0 to 360
         velocity: 0, // from 0 to maxVelocity
         angularVelocity: 0 // from 0 to maxAngularVelocity
       }
@@ -132,6 +175,8 @@ export default class Arena {
         resp.ships.push({
           angule: dirVector.dot(posVector) * 180
         })
+      } else {
+        resp.myShip = this.elements[i]
       }
     }
 

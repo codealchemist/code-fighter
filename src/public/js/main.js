@@ -11,7 +11,7 @@ const players = [
 ]
 var ships = []
 
-for (var i = 0; i < 5; i++) {
+for (var i = 0; i < 3; i++) {
   ships.push(new Ship({
     diameter: 40,
     color: 'blue',
