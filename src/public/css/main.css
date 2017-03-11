@@ -65,6 +65,10 @@ pre {
   background-color: #222;
 }
 
+.profile-img {
+  width: 55px;
+}
+
 .center {
   margin: auto;
 }
