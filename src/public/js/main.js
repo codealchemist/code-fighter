@@ -11,13 +11,13 @@ const players = [
 ]
 var ships = []
 
-for (var i = 0; i < 5; i++) {
+for (var i = 0; i < 3; i++) {
   ships.push(new Ship({
     diameter: 40,
+    name: 'name' + Math.floor(Math.random() * 100),
     color: 'blue',
-    x: 520,
-    y: 620,
-    player: players[Math.floor(Math.random() * 2)]
+    // player: players[Math.floor(Math.random() * 2)]
+    player: players[1]
   }))
   app.arena.addShip(ships[ships.length - 1])
 }
