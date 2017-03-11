@@ -10,7 +10,7 @@ export default class Ship {
       maxAceleration: 10,
       weight: 10,
       maxVelocity: 100,
-      maxAngularVelocity: 100,
+      maxAngularVelocity: 10,
       maxEnergy: 5,
       reloadingTime: 1000 // in ms
     }

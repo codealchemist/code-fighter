@@ -14,6 +14,7 @@ var ships = []
 for (var i = 0; i < 3; i++) {
   ships.push(new Ship({
     diameter: 40,
+    name: 'name' + Math.floor(Math.random() * 100),
     color: 'blue',
     // player: players[Math.floor(Math.random() * 2)]
     player: players[1]

@@ -2,12 +2,6 @@ import Bullet from './bullet.js'
 
 export default class Arena {
   constructor () {
-    // Run between -64 and 64 cycles, sine wave style.
-    // This makes it easier to do stuff on the upper or lower states.
-    this.cyclesHigh = 16
-    this.cyclesLow = -16
-    this.cycles = this.cyclesLow
-
     this.elements = []
   }
 
@@ -37,16 +31,21 @@ export default class Arena {
   }
 
   draw (p) {
+    let playersStatus = ''
     p.background(0)
 
     for (var i = 0; i < this.elements.length; i++) {
       this.elements[i][this.elements[i].type].draw(p, this.elements[i].state)
+      if (this.elements[i].type === 'ship') {
+        playersStatus += this.elements[i].ship.name + ': ' + this.elements[i].state.energy + ' - ' + this.elements[i].state.deaths + '\n'
+      }
     }
+
+    p.textSize(20)
+    p.text(playersStatus, 30, 30)
   }
 
   update (elapsedTime) {
-    // this.updateCycles()
-
     for (let element in this.elements) {
       let currentElement = this.elements[element]
       switch (currentElement.type) {
@@ -58,13 +57,6 @@ export default class Arena {
           break
       }
     }
-  }
-
-  updateCycles () {
-    ++this.cycles
-    if (this.cycles < this.cyclesHigh) return
-
-    this.cycles = this.cyclesLow
   }
 
   updateShip (elapsedTime, element) {
@@ -87,7 +79,7 @@ export default class Arena {
       element.state.velocity = element.ship.intrinsicProperties.maxVelocity * Math.sign(element.state.velocity)
     }
 
-    // if the velocity = max then maxAngularVelocity = maxAngularVelocity / 4
+    // if the velocity = maxVelocity then maxAngularVelocity = maxAngularVelocity / 4
     const maxAngRelativeToVelocity = (-(3 / 4) * (element.ship.intrinsicProperties.maxAngularVelocity / element.ship.intrinsicProperties.maxVelocity) * element.state.velocity + element.ship.intrinsicProperties.maxAngularVelocity)
     if (Math.abs(element.state.angularVelocity) > maxAngRelativeToVelocity) {
       element.state.angularVelocity = maxAngRelativeToVelocity * Math.sign(element.state.angularVelocity)
@@ -95,7 +87,7 @@ export default class Arena {
 
     element.state.x += element.state.velocity * Math.cos(element.state.direction) * (elapsedTime / 1000)
     element.state.y += element.state.velocity * Math.sin(element.state.direction) * (elapsedTime / 1000)
-    element.state.direction += element.state.angularVelocity * (elapsedTime / 10000)
+    element.state.direction += element.state.angularVelocity * (elapsedTime / 1000)
 
     // fire if is not reloading and the player want to fire
     if (!element.state.reloadingBullet && element.ship.userProperties.fire) {
@@ -104,7 +96,7 @@ export default class Arena {
 
       this.elements.push({
         type: 'bullet',
-        bullet: new Bullet(element.state),
+        bullet: new Bullet(element.state, element.ship),
         state: {
           x: element.state.x,
           y: element.state.y,
@@ -117,21 +109,47 @@ export default class Arena {
     if (element.state.reloadingBullet < 0) {
       delete element.state.reloadingBullet
     }
+
+    // check if some ship is death
+    if (element.state.energy <= 0) {
+      this.respawnShip(element)
+    }
   }
   updateBullet (elapsedTime, element) {
+    element.bullet.update(elapsedTime, this.getStatus(element))
+
     element.state.x += element.state.velocity * Math.cos(element.state.direction) * (elapsedTime / 1000)
     element.state.y += element.state.velocity * Math.sin(element.state.direction) * (elapsedTime / 1000)
 
-    if (this.p.mag(
-      element.state.x - element.bullet.intrinsicProperties.initialX,
-      element.state.y - element.bullet.intrinsicProperties.initialY,
-      ) > element.bullet.intrinsicProperties.maxDistance) {
+    if (element.bullet.hasCollided) {
+      // remove energy to a ship
+      for (var i = 0; i < this.elements.length; i++) {
+        if (this.elements[i].ship === element.bullet.hasCollidedWithShip) {
+          this.elements[i].state.energy--
+          break
+        }
+      }
       // kill the bullet
-
       this.elements.splice(this.elements.indexOf(element), 1)
+    } else {
+      if (this.p.mag(
+        element.state.x - element.bullet.intrinsicProperties.initialX,
+        element.state.y - element.bullet.intrinsicProperties.initialY,
+        ) > element.bullet.intrinsicProperties.maxDistance) {
+        // kill the bullet
+        this.elements.splice(this.elements.indexOf(element), 1)
+      }
     }
   }
-
+  respawnShip (element) {
+    element.state.x = Math.floor(Math.random() * window.innerWidth)
+    element.state.y = Math.floor(Math.random() * window.innerHeight)
+    element.state.direction = Math.floor(Math.random() * 360)
+    element.state.velocity = 0
+    element.state.angularVelocity = 0
+    element.state.energy = element.ship.intrinsicProperties.maxEnergy
+    element.state.deaths ++
+  }
   addShip (ship) {
     this.elements.push({
       type: 'ship',
@@ -142,7 +160,9 @@ export default class Arena {
         y: Math.floor(Math.random() * window.innerHeight),
         direction: Math.floor(Math.random() * 360), // from 0 to 360
         velocity: 0, // from 0 to maxVelocity
-        angularVelocity: 0 // from 0 to maxAngularVelocity
+        angularVelocity: 0, // from 0 to maxAngularVelocity
+        energy: ship.intrinsicProperties.maxEnergy,
+        deaths: 0
       }
     })
   }
@@ -157,29 +177,53 @@ export default class Arena {
   }
   getStatus (element) {
     // This method is in WIP
-    var resp = {
-      ships: []
-    }
-    for (var i = 0; i < this.elements.length; i++) {
-      if (this.elements[i].ship !== element.ship) {
-        let posVector = this.p.createVector(
-          this.elements[i].state.x - element.state.x,
-          this.elements[i].state.y - element.state.y
-        )
-        let dirVector = this.p.createVector(
-          Math.cos(element.state.direction + Math.PI / 2),
-          Math.sin(element.state.direction + Math.PI / 2)
-        )
-        posVector = posVector.normalize()
+    var resp
+    switch (element.type) {
+      case 'ship':
+        resp = {
+          ships: [],
+          myShip: undefined
+        }
+        for (let i = 0; i < this.elements.length; i++) {
+          if (this.elements[i].type === 'ship') {
+            if (this.elements[i].ship !== element.ship) {
+              let posVector = this.p.createVector(
+                this.elements[i].state.x - element.state.x,
+                this.elements[i].state.y - element.state.y
+              )
+              let dirVector = this.p.createVector(
+                Math.cos(element.state.direction + Math.PI / 2),
+                Math.sin(element.state.direction + Math.PI / 2)
+              )
+              posVector = posVector.normalize()
 
-        resp.ships.push({
-          angule: dirVector.dot(posVector) * 180
-        })
-      } else {
-        resp.myShip = this.elements[i]
-      }
+              resp.ships.push({
+                angule: dirVector.dot(posVector) * 180
+              })
+            } else {
+              resp.myShip = this.elements[i]
+            }
+          }
+        }
+        break
+      case 'bullet':
+        resp = {
+          elements: [],
+          bullet: undefined
+        }
+        for (let i = 0; i < this.elements.length; i++) {
+          if (this.elements[i].type === 'ship') {
+            resp.elements.push({
+              x: this.elements[i].state.x,
+              y: this.elements[i].state.y,
+              ship: this.elements[i].ship
+            })
+          } else if (this.elements[i].type === 'bullet' && this.elements[i].bullet === element.bullet) {
+            resp.bullet = this.elements[i]
+          }
+        }
+        break
     }
-
     return resp
   }
 }
