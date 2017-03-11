@@ -1,5 +1,6 @@
 import El from './el.js'
 import Arena from './arena.js'
+// import ArenaTeam from './arenaTeam.js' // TODO: Remove unused code.
 
 export default class App {
   constructor () {
@@ -11,6 +12,7 @@ export default class App {
 
     // Create arena adding players to it.
     this.arena = new Arena()
+    // this.arena = new ArenaTeam()
 
     this.setEvents()
   }

@@ -1,8 +1,9 @@
 export default class Ship {
-  constructor ({x, y, diameter, color, name, energy, player}) {
+  constructor ({x, y, diameter, color, centerColor, name, energy, player}) {
     this.name = name
     this.energy = energy
-    this.color = color
+    this.color = color || 'blue'
+    this.centerColor = centerColor || 'white'
     this.diameter = diameter
 
     // the user can not change this
@@ -31,11 +32,11 @@ export default class Ship {
     this.p.ellipse(x, y, this.diameter)
 
     // Draw center.
-    this.p.fill(this.p.color('white'))
-    this.p.ellipse(x, y, this.diameter / 4)
+    this.p.fill(this.p.color(this.color))
+    this.p.ellipse(x, y, this.diameter / 2, this.diameter / 2)
 
-    this.p.fill(this.p.color('red'))
-    this.p.ellipse(x, y, 10, 10)
+    this.p.fill(this.p.color(this.centerColor))
+    this.p.ellipse(x, y, this.diameter / 4)
 
     // Draw direction
     this.p.fill(204)

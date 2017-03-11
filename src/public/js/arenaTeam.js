@@ -1,7 +1,7 @@
 import Bullet from './bullet.js'
 import Ship from './ship.js'
 
-export default class Arena {
+export default class ArenaTeam {
   constructor () {
     this.elements = []
   }
@@ -18,6 +18,7 @@ export default class Arena {
 
   initP5 () {
     new p5((p) => { // eslint-disable-line
+//       var that = this; // TODO: Remove unused code.
       p.setup = () => {
         p.createCanvas(window.innerWidth, window.innerHeight)
         p.strokeWeight(0)
@@ -152,9 +153,12 @@ export default class Arena {
     element.state.deaths ++
   }
   addPlayer (player) {
+    let team = Math.floor(Math.random() * 2)
     let ship = new Ship({
       diameter: 40,
       name: 'name' + Math.floor(Math.random() * 100),
+      color: 'red',
+      centerColor: team ? 'blue' : 'green',
       player: player
     })
     this.elements.push({
@@ -168,7 +172,8 @@ export default class Arena {
         velocity: 0, // from 0 to maxVelocity
         angularVelocity: 0, // from 0 to maxAngularVelocity
         energy: ship.intrinsicProperties.maxEnergy,
-        deaths: 0
+        deaths: 0,
+        team: team
       }
     })
   }
@@ -187,7 +192,8 @@ export default class Arena {
     switch (element.type) {
       case 'ship':
         resp = {
-          ships: [],
+          enemyShips: [],
+          friendShips: [],
           myShip: undefined
         }
         // find myShip
@@ -216,7 +222,7 @@ export default class Arena {
               let distance = this.p.mag(posVector.x, posVector.y)
               posVector.normalize()
 
-              resp.ships.push({
+              resp[this.elements[i].state.team === resp.myShip.state.team ? 'friendShips' : 'enemyShips'].push({
                 angule: dirVector.dot(posVector) * 180,
                 distance: distance
               })
@@ -234,7 +240,8 @@ export default class Arena {
             resp.elements.push({
               x: this.elements[i].state.x,
               y: this.elements[i].state.y,
-              ship: this.elements[i].ship
+              ship: this.elements[i].ship,
+              team: this.elements[i].state.team
             })
           } else if (this.elements[i].type === 'bullet' && this.elements[i].bullet === element.bullet) {
             resp.bullet = this.elements[i]
