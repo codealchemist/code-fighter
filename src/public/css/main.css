@@ -53,8 +53,40 @@ pre {
   font-size: 12px;
 }
 
+textarea {
+  width: calc(100% - 25px);
+  height: calc(100% - 140px);
+  resize: none;
+}
+
+input {
+  border: 1px solid #111;
+  padding: 5px;
+  width: 140px;
+  color: #444;
+  font: 14px Raleway;
+}
+
 #main-container {
   color: #999;
+}
+
+#editor-container {
+  display: none;
+}
+
+#players-list {
+  display: none;
+}
+
+#editor { 
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0.8;
+  z-index: 200;
 }
 
 .error-container {
@@ -62,6 +94,10 @@ pre {
 }
 
 .bg1 {
+  background-color: #111;
+}
+
+.bg2 {
   background-color: #222;
 }
 
@@ -117,6 +153,11 @@ pre {
   height: 120px;
   border: 0;
   padding: 10px;
+}
+
+.full-screen {
+  width: 100%;
+  height: 100%;
 }
 
 footer {
