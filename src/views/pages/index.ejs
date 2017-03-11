@@ -11,16 +11,20 @@
 
     <div id="welcome" class="container-fluid">
         <div id="main-container" class="big-content abs-center bg1 appear">
+          <% if (user) { %>
           <p>
             Hey <b id="person-name" class="capitalize"><%= user.displayName %></b>! 
             Nice to meet you!
           </p>
+          <img class="abs-top-right circle profile-img" src="<%= user.image %>">
+          <a href="/auth/logout" class="abs-bottom-right">Logout</a>
+          <% } else { %>
+            <a href="/auth/login" class="abs-bottom-right">Login</a>
+          <% } %>
+
           <p>
             Let's <a id="play" href="javascript:void(0)">start the fight!</a>
           </p>
-          <img class="abs-top-right circle" src="<%= user.image %>">
-
-          <a href="/auth/logout" class="abs-bottom-right">Logout</a>
         </div>
     </div>
 
