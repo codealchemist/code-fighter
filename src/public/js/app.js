@@ -135,8 +135,12 @@ export default class App {
               player: customPlayer
             })
 
-            this.arena.addShip(customShip)
-            console.log('Your code was loaded dude!')
+            if (this.currentShipId) {
+              this.arena.changeShip(this.currentShipId, customShip)
+              return
+            }
+
+            this.currentShipId = this.arena.addShip(customShip)
           } catch (e) {
             alertify.error(e.message)
           }
