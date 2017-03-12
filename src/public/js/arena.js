@@ -13,6 +13,7 @@ export default class Arena {
       initialTime = finalTime
     }, 1)
     this.initP5()
+    this.running = true
   }
 
   initP5 () {
