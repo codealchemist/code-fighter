@@ -41,7 +41,9 @@
       "describe",
       "it",
       "bean",
-      "p5"
+      "p5",
+      "ace",
+      "alertify"
     ],
     "ignore": [
       "src/public/js/lib/**"

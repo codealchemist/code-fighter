@@ -24,7 +24,7 @@ export default class El {
   toggle () {
     if (this.$el.style.display === 'none') {
       this.show()
-      return this 
+      return this
     }
 
     this.hide()

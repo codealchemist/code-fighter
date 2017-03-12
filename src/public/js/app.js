@@ -31,9 +31,9 @@ export default class App {
   }
 
   initEditor () {
-    this.editor = ace.edit("editor")
-    this.editor.setTheme("ace/theme/monokai")
-    this.editor.getSession().setMode("ace/mode/javascript")
+    this.editor = ace.edit('editor')
+    this.editor.setTheme('ace/theme/monokai')
+    this.editor.getSession().setMode('ace/mode/javascript')
     this.editor.insert(`// Write your bot's JavaScript code here\n`)
     this.editor.gotoLine(1)
     this.editor.setShowPrintMargin(false)
@@ -126,7 +126,7 @@ export default class App {
           const code = this.editor.getValue()
 
           try {
-            const CustomPlayer = eval(code) // Better ways? new Function maybe?
+            const CustomPlayer = eval(code) // eslint-disable-line
             const customPlayer = new CustomPlayer()
             const customShip = new Ship({
               diameter: 40,
