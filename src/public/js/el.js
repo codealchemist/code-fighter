@@ -21,6 +21,20 @@ export default class El {
     return this
   }
 
+  toggle () {
+    if (this.$el.style.display === 'none') {
+      this.show()
+      return this
+    }
+
+    this.hide()
+    return this
+  }
+
+  isVisible () {
+    return (this.$el.style.display !== 'none' && this.$el.style.opacity !== 0)
+  }
+
   style (styleName, value) {
     this.$el.style[styleName] = value
     return this

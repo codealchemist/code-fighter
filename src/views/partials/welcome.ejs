@@ -1,0 +1,33 @@
+<div id="welcome" class="container-fluid">
+    <div id="main-container" class="big-content abs-center bg1 appear">
+      <% if (user) { %>
+      <p>
+        Hey <b id="person-name" class="capitalize"><%= user.displayName %></b>! 
+        Nice to meet you!
+      </p>
+      <img class="abs-top-right circle profile-img" src="<%= user.image %>">
+      <a href="/auth/logout" class="abs-bottom-right">Logout</a>
+      <% } else { %>
+        <a href="/auth/login" class="abs-bottom-right">Login</a>
+      <% } %>
+
+      <p class="hide">
+        You can start by opening the 
+        <a id="open-editor-button" href="javascript:void(0)">code editor</a>,
+        and when you're ready
+        <a id="play-button" href="javascript:void(0)">enter the arena!</a>
+      </p>
+
+      <p>
+        Start by opening the <a id="show-players-list-button" href="javascript:void(0)">players list</a>
+        and adding a new player.
+
+        After that, you can jump right into the arena!
+      </p>
+
+      <p>
+        Or just <a id="view-button" href="javascript:void(0)">view the fight</a>
+        without a ship.
+      </p>
+    </div>
+</div>
