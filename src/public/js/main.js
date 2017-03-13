@@ -1,23 +1,12 @@
 import App from './app.js'
-import Ship from './ship.js'
-import GarvenDreis from './players/garven-dreis.js'
+// import GarvenDreis from './players/garven-dreis.js'
 import PedrinGaul from './players/pedrin-gaul.js'
+// import MarioBaracus from './players/mario-baracus-teamplayer.js'
 
 var app = new App()
 
-const players = [
-  new GarvenDreis(),
-  new PedrinGaul()
-]
-var ships = []
-
 for (var i = 0; i < 3; i++) {
-  ships.push(new Ship({
-    diameter: 40,
-    name: 'name' + Math.floor(Math.random() * 100),
-    color: 'blue',
-    // player: players[Math.floor(Math.random() * 2)]
-    player: players[1]
-  }))
-  app.arena.addShip(ships[ships.length - 1])
+  app.arena.addPlayer(new PedrinGaul())
+  // MarioBaracus is for play in team mode
+  // app.arena.addPlayer(new MarioBaracus())
 }

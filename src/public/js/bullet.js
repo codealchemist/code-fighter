@@ -1,5 +1,5 @@
 export default class Bullet {
-  constructor ({x, y}, ownership) {
+  constructor ({x, y, team}, ownership) {
     this.intrinsicProperties = {
       maxVelocity: 100,
       maxDistance: 500,
@@ -7,6 +7,7 @@ export default class Bullet {
       initialX: x,
       initialY: y
     }
+    this.team = team
     this.ownership = ownership
   }
 
@@ -15,10 +16,13 @@ export default class Bullet {
     if (this.p) {
       for (let i = 0; i < arenaStatus.elements.length; i++) {
         if (this.ownership !== arenaStatus.elements[i].ship) {
-          let distance = this.p.dist(arenaStatus.bullet.state.x, arenaStatus.bullet.state.y, arenaStatus.elements[i].x, arenaStatus.elements[i].y)
-          if (distance < arenaStatus.elements[i].ship.diameter) {
-            this.hasCollided = true
-            this.hasCollidedWithShip = arenaStatus.elements[i].ship
+          // to avoid friend fire in the team mode
+          if (this.team === undefined || this.team !== arenaStatus.elements[i].team) {
+            let distance = this.p.dist(arenaStatus.bullet.state.x, arenaStatus.bullet.state.y, arenaStatus.elements[i].x, arenaStatus.elements[i].y)
+            if (distance < arenaStatus.elements[i].ship.diameter) {
+              this.hasCollided = true
+              this.hasCollidedWithShip = arenaStatus.elements[i].ship
+            }
           }
         }
       }

@@ -1,7 +1,7 @@
 import Bullet from './bullet.js'
 import Ship from './ship.js'
 
-export default class Arena {
+export default class ArenaTeam {
   constructor () {
     this.elements = []
   }
@@ -14,11 +14,11 @@ export default class Arena {
       initialTime = finalTime
     }, 1)
     this.initP5()
-    this.running = true
   }
 
   initP5 () {
     new p5((p) => { // eslint-disable-line
+//       var that = this; // TODO: Remove unused code.
       p.setup = () => {
         p.createCanvas(window.innerWidth, window.innerHeight)
         p.strokeWeight(0)
@@ -117,7 +117,6 @@ export default class Arena {
       this.respawnShip(element)
     }
   }
-
   updateBullet (elapsedTime, element) {
     element.bullet.update(elapsedTime, this.getStatus(element))
 
@@ -144,7 +143,6 @@ export default class Arena {
       }
     }
   }
-
   respawnShip (element) {
     element.state.x = Math.floor(Math.random() * window.innerWidth)
     element.state.y = Math.floor(Math.random() * window.innerHeight)
@@ -155,12 +153,14 @@ export default class Arena {
     element.state.deaths ++
   }
   addPlayer (player) {
+    let team = Math.floor(Math.random() * 2)
     let ship = new Ship({
       diameter: 40,
       name: 'name' + Math.floor(Math.random() * 100),
+      color: 'red',
+      centerColor: team ? 'blue' : 'green',
       player: player
     })
-
     this.elements.push({
       type: 'ship',
       ship: ship,
@@ -172,33 +172,11 @@ export default class Arena {
         velocity: 0, // from 0 to maxVelocity
         angularVelocity: 0, // from 0 to maxAngularVelocity
         energy: ship.intrinsicProperties.maxEnergy,
-        deaths: 0
+        deaths: 0,
+        team: team
       }
     })
-
-    const index = this.elements.length - 1
-    return index
   }
-
-  changeShip (index, ship) {
-    this.elements[index] = {
-      type: 'ship',
-      ship: ship,
-      state: {
-        // initial values of a ship
-        x: Math.floor(Math.random() * window.innerWidth),
-        y: Math.floor(Math.random() * window.innerHeight),
-        direction: Math.floor(Math.random() * 360), // from 0 to 360
-        velocity: 0, // from 0 to maxVelocity
-        angularVelocity: 0, // from 0 to maxAngularVelocity
-        energy: ship.intrinsicProperties.maxEnergy,
-        deaths: 0
-      }
-    }
-    console.log('Ship changed.')
-    console.log('Elements: ', this.elements)
-  }
-
   removeShip (ship) {
     for (var i = 0; i < this.elements.length; i++) {
       if (this.elements[i].ship === ship) {
@@ -208,14 +186,14 @@ export default class Arena {
     }
     this.elements.splice(this.elements.indexOf(ship), 1)
   }
-
   getStatus (element) {
     // This method is in WIP
     var resp
     switch (element.type) {
       case 'ship':
         resp = {
-          ships: [],
+          enemyShips: [],
+          friendShips: [],
           myShip: undefined
         }
         // find myShip
@@ -244,7 +222,7 @@ export default class Arena {
               let distance = this.p.mag(posVector.x, posVector.y)
               posVector.normalize()
 
-              resp.ships.push({
+              resp[this.elements[i].state.team === resp.myShip.state.team ? 'friendShips' : 'enemyShips'].push({
                 angule: dirVector.dot(posVector) * 180,
                 distance: distance
               })
@@ -262,7 +240,8 @@ export default class Arena {
             resp.elements.push({
               x: this.elements[i].state.x,
               y: this.elements[i].state.y,
-              ship: this.elements[i].ship
+              ship: this.elements[i].ship,
+              team: this.elements[i].state.team
             })
           } else if (this.elements[i].type === 'bullet' && this.elements[i].bullet === element.bullet) {
             resp.bullet = this.elements[i]

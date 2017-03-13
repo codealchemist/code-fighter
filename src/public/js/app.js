@@ -1,5 +1,6 @@
 import El from './el.js'
 import Arena from './arena.js'
+// import ArenaTeam from './arenaTeam.js'
 import Ship from './ship.js'
 
 export default class App {
@@ -26,6 +27,7 @@ export default class App {
 
     // Create arena adding players to it.
     this.arena = new Arena()
+    // this.arena = new ArenaTeam()
 
     this.setEvents()
   }
@@ -140,7 +142,7 @@ export default class App {
               return
             }
 
-            this.currentShipId = this.arena.addShip(customShip)
+            this.currentShipId = this.arena.addPlayer(customPlayer)
           } catch (e) {
             alertify.error(e.message)
           }
