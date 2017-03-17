@@ -1,20 +1,22 @@
-import Bullet from './bullet.js'
-import Ship from './ship.js'
+import bullet from './bullet.js'
+import ship from './ship.js'
 
 export default class Arena {
   constructor () {
     this.elements = []
+
+    this.renderers = {
+      ship,
+      bullet
+    }
   }
 
   init () {
-    var initialTime = new Date()
-    setInterval(() => {
-      let finalTime = new Date()
-      this.update(finalTime - initialTime)
-      initialTime = finalTime
-    }, 1)
+
     this.initP5()
-    this.running = true
+
+
+
   }
 
   initP5 () {
@@ -36,17 +38,21 @@ export default class Arena {
     let playersStatus = ''
     p.background(0)
 
-    for (var i = 0; i < this.elements.length; i++) {
-      this.elements[i][this.elements[i].type].draw(p, this.elements[i].state)
-      if (this.elements[i].type === 'ship') {
-        playersStatus += this.elements[i].ship.name + ': ' + this.elements[i].state.energy + ' - ' + this.elements[i].state.deaths + '\n'
+    this.elements.map((element) => {
+      this.renderers[element.type](element, p)
+
+      if (element.type === 'ship') {
+        playersStatus += element.ship.name + ': ' + element.state.energy + ' - ' + element.state.deaths + '\n'
       }
-    }
+    })
 
     p.textSize(20)
     p.text(playersStatus, 30, 30)
   }
 
+  setElements (elements) {
+    this.elements = elements
+  }
   update (elapsedTime) {
     for (let element in this.elements) {
       let currentElement = this.elements[element]
