@@ -1,7 +1,10 @@
-function routes (app) {
+function routes (app, serverUrl) {
   // Render index page.
   app.get('/', (req, res) => {
-    res.render('pages/index', {user: req.user || null})
+    res.render('pages/index', {
+      user: req.user || null,
+      serverUrl
+    })
   })
 
   // app.get('/socket', (req, res) => {

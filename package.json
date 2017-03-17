@@ -25,6 +25,7 @@
     "express-session": "^1.15.1",
     "extend": "^3.0.0",
     "googleapis": "^17.1.0",
+    "ip": "^1.1.5",
     "nconf": "^0.8.4",
     "passport": "^0.3.2",
     "passport-google-oauth20": "^1.0.0",

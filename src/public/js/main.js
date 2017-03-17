@@ -14,7 +14,7 @@ var app = new App()
 
 var frames = []
 
-var socket = io('http://10.2.1.147:3000');
+var socket = io(serverUrl);
 socket.on('connect', function(){});
 socket.on('event', function(data){});
 socket.on('disconnect', function(){});

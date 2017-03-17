@@ -5,9 +5,16 @@ const passport = require('passport')
 const config = require('./config')
 const fs = require('fs')
 const env = process.env.NODE_ENV
+const ip = require('ip')
+const localIp = ip.address()
 
-// Set port.
-const port = config.get('PORT') || 9000
+// Client.
+const clientPort = config.get('PORT') || 9000
+const clientUrl = `http://${localIp}:${clientPort}`
+
+// Code Fighter server.
+const serverPort = 3000
+const serverUrl = config.get('serverUrl') || `http://${localIp}:${serverPort}`
 
 // print ascii art
 var artFile = resolve('src/ascii-art.txt')
@@ -32,15 +39,18 @@ const sessionConfig = {
 app.use(session(sessionConfig))
 
 // OAuth2
-app.use(passport.initialize())
-app.use(passport.session())
-app.use(require('./lib/oauth2').router)
+const useAuth = config.get('useAuth')
+if (useAuth) {
+  app.use(passport.initialize())
+  app.use(passport.session())
+  app.use(require('./lib/oauth2').router)
+}
 
 // Static routes.
 app.use(express.static(resolve('src/public')))
 
 // Set routes.
-require('./routes')(app)
+require('./routes')(app, serverUrl)
 
 // Basic 404 handler
 app.use((req, res) => {
@@ -60,9 +70,9 @@ app.use((err, req, res, next) => {
 
 if (module === require.main) {
   // Start the server
-  const server = app.listen(port, () => {
+  const server = app.listen(clientPort, () => {
     const port = server.address().port
-    console.log(`App listening on: http://localhost:${port}`)
+    console.log(`App listening on: ${clientUrl}`)
   })
 }
 
