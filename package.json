@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "standard && mocha",
-    "test-focus": "standard-focus",
-    "start": "node src/index.js",
-    "monitor": "nodemon src/index.js",
+    "lint-focus": "standard-focus",
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
     "docker-start": "./docker-start.sh",
     "docker-rebuild": "./docker-start.sh rebuild"
   },
@@ -20,16 +21,10 @@
   "repository": "codealchemist/google-permissions",
   "license": "MIT",
   "dependencies": {
-    "ejs": "^2.5.6",
-    "express": "^4.14.1",
-    "express-session": "^1.15.1",
     "extend": "^3.0.0",
-    "googleapis": "^17.1.0",
-    "ip": "^1.1.5",
     "nconf": "^0.8.4",
-    "passport": "^0.3.2",
-    "passport-google-oauth20": "^1.0.0",
-    "socket.io": "^1.7.3",
+    "next": "^1.2.3",
+    "react-burger-menu": "^1.10.14",
     "socket.io-client": "^1.7.3"
   },
   "devDependencies": {
