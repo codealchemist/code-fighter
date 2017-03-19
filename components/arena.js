@@ -9,12 +9,14 @@ export default class Arena {
       ship: Ship,
       bullet: Bullet
     }
+
+    this.state = {
+      loaded: false
+    }
   }
 
-  render () {
-    return (
-      <div />
-    )
+  getInitialState () {
+    return { loaded: false }
   }
 
   init () {
@@ -34,6 +36,10 @@ export default class Arena {
       // temporal
       this.p = p
     })
+  }
+
+  quit () {
+    this.p.remove()
   }
 
   draw (p) {

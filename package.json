@@ -25,6 +25,7 @@
     "nconf": "^0.8.4",
     "next": "^1.2.3",
     "react-burger-menu": "^1.10.14",
+    "react-md-spinner": "^0.2.1",
     "socket.io-client": "^1.7.3"
   },
   "devDependencies": {
