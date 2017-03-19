@@ -1,19 +1,19 @@
-import bullet from './bullet.js'
-import ship from './ship.js'
+import Bullet from './bullet.js'
+import Ship from './ship.js'
 
 export default class Arena {
   constructor () {
     this.elements = []
 
     this.renderers = {
-      ship,
-      bullet
+      ship: Ship,
+      bullet: Bullet
     }
   }
 
   render () {
     return (
-      <div></div>
+      <div />
     )
   }
 
@@ -52,7 +52,7 @@ export default class Arena {
     p.text(playersStatus, 30, 30)
   }
 
-  setElements (elements) {
+  setElements (elements) {
     this.elements = elements
   }
 

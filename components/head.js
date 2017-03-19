@@ -10,7 +10,7 @@ export default ({ children, title = 'Code Fighter' }) => (
 
       { /* open graph */ }
       <meta property='og:title' content='Google Permissions' />
-      <meta property='og:site_name' content='Google Permissions'/>
+      <meta property='og:site_name' content='Google Permissions' />
       <meta property='og:type' content='article' />
       <meta property='og:description' content='Fight against other developters commanding your hero with JavaScript!' />
       { /* <meta property='og:url' content='TODO' /> */ }
@@ -26,10 +26,10 @@ export default ({ children, title = 'Code Fighter' }) => (
       <link href='//fonts.googleapis.com/css?family=Dancing+Script' rel='stylesheet' />
 
       { /* Library Styles */ }
-      <link href="//alertifyjs.com/build/css/alertify.css" rel="stylesheet" />
+      <link href='//alertifyjs.com/build/css/alertify.css' rel='stylesheet' />
 
       { /* Library JS */ }
-      <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+      <script src='//cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js' />
 
       { children }
     </Head>

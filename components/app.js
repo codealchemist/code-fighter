@@ -18,7 +18,7 @@ export default class App extends React.Component {
 
   render () {
     return (
-      <div></div>
+      <div />
     )
   }
 
@@ -31,32 +31,32 @@ export default class App extends React.Component {
 
   initSocket () {
     const serverUrl = '//localhost:3001'
-    const socket = io(serverUrl);
-    socket.on('connect', () => {});
-    socket.on('event', (data) => {});
-    socket.on('disconnect', () => {});
+    const socket = io(serverUrl)
+    socket.on('connect', () => {})
+    socket.on('event', (data) => {})
+    socket.on('disconnect', () => {})
     socket.on('connect', () => {
       console.log('connect')
-    });
+    })
 
     socket.on('update_finish', (data) => {
       this.frames = this.frames.concat(JSON.parse(data))
-    });
+    })
 
     socket.on('event', (data) => {
       console.log('event')
-    });
+    })
 
     socket.on('disconnect', () => {
       console.log('disconnect')
-    });
+    })
   }
 
   initFrameLoader (fps) {
     setInterval(() => {
-      if(this.frames.length > 0) {
+      if (this.frames.length > 0) {
         const frame = this.frames.shift()
-        this.arena.setElements(frame);
+        this.arena.setElements(frame)
 
         // console.log(this.frames.length)
       }

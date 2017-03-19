@@ -1,5 +1,6 @@
-const BurgerMenu = require('react-burger-menu').slide
+import React from 'react'
 import Link from 'next/link'
+const BurgerMenu = require('react-burger-menu').slide
 
 const styles = {
   bmBurgerButton: {
@@ -47,17 +48,16 @@ const styles = {
   }
 }
 
-
 export default class Menu extends React.Component {
   render () {
     return (
-      <BurgerMenu styles={ styles } radiumConfig={{ userAgent: 'Gecko' }}>
-        <Link href='/'><a style={ styles.menuItem }>Home</a></Link>
-        <Link href='/tutorial'><a style={ styles.menuItem }>Tutorial</a></Link>
-        <Link href='/arena'><a style={ styles.menuItem }>Open Arena</a></Link>
-        <Link href='/add-player'><a style={ styles.menuItem }>Add Player</a></Link>
-        <Link href='/contact'><a style={ styles.menuItem }>Contact</a></Link>
-        <Link href='/about'><a style={ styles.menuItem }>About</a></Link>
+      <BurgerMenu styles={styles} radiumConfig={{userAgent: 'Gecko'}}>
+        <Link href='/'><a style={styles.menuItem}>Home</a></Link>
+        <Link href='/tutorial'><a style={styles.menuItem}>Tutorial</a></Link>
+        <Link href='/arena'><a style={styles.menuItem}>Open Arena</a></Link>
+        <Link href='/add-player'><a style={styles.menuItem}>Add Player</a></Link>
+        <Link href='/contact'><a style={styles.menuItem}>Contact</a></Link>
+        <Link href='/about'><a style={styles.menuItem}>About</a></Link>
       </BurgerMenu>
     )
   }

@@ -42,7 +42,8 @@
       "bean",
       "p5",
       "ace",
-      "alertify"
+      "alertify",
+      "io"
     ],
     "ignore": [
       "src/public/js/lib/**"
