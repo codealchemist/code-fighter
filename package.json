@@ -4,7 +4,7 @@
   "description": "Fight against other developters commanding your hero with JavaScript!",
   "main": "index.js",
   "scripts": {
-    "test": "standard && mocha",
+    "test": "standard",
     "lint-focus": "standard-focus",
     "dev": "next",
     "build": "next build",
