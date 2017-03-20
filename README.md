@@ -1,11 +1,15 @@
 # code-fighter
 Fight against other developters commanding your hero with JavaScript!
 
+[![Build Status](https://travis-ci.org/codealchemist/code-fighter.svg?branch=master)](https://travis-ci.org/codealchemist/code-fighter)
+
+
 ## Notes
 
 `code-fighter` is work in progress!
 This is the first sketch on the idea.
 We still need to think about lots of stuff.
+
 
 ## TODO
 
@@ -17,29 +21,31 @@ We still need to think about lots of stuff.
 - Add different kinds of attacks and defenses.
 - Add level bots, obstacles, resources.
 
-## Google auth built-in
+## Build
 
-Uses [google-permissions](https://github.com/codealchemist/google-permissions) to authenticate with Google.
+`npm run build`
 
-## Set Credentials
 
-To authenticate with Google you need to have a Google app.
-Goto https://console.developers.google.com, download the credentials file for your project
-and store it as `credentials.json` in the root folder of this app.
+## Run
 
-## Local run
+Development mode:
 
-`npm run`
+`npm run dev`
 
-## Dockerized run
+Production mode _(will start latest build)_:
 
-Init and run instance:
+`npm start`
 
-`npm run docker-start`
 
-Rebuild and run instance:
+## Test
 
-`npm run docker-rebuild`
+`npm test`
+
+
+## Focused linting
+
+`npm run lint-focus`
+
 
 ## Screenshots
 
