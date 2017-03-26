@@ -48,7 +48,9 @@
       "p5",
       "ace",
       "alertify",
-      "io"
+      "io",
+      "localStorage",
+      "fetch"
     ],
     "ignore": [
       "src/public/js/lib/**"
