@@ -9,8 +9,7 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "docker-start": "./docker-start.sh",
-    "docker-rebuild": "./docker-start.sh rebuild"
+    "sass": "sass static/theme.scss static/theme.css"
   },
   "keywords": [
     "code",
@@ -23,8 +22,13 @@
   "dependencies": {
     "extend": "^3.0.0",
     "nconf": "^0.8.4",
-    "next": "^1.2.3",
+    "next": "^2.0.0-beta",
+    "react": "^15.4.2",
+    "react-addons-css-transition-group": "^15.4.2",
+    "react-addons-transition-group": "^15.4.2",
     "react-burger-menu": "^1.10.14",
+    "react-dom": "^15.4.2",
+    "react-md": "^1.0.10",
     "react-md-spinner": "^0.2.1",
     "socket.io-client": "^1.7.3"
   },

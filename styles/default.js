@@ -23,12 +23,14 @@ export default () => (
       opacity: 0.7;
     }
 
-    body {
+    html, body {
       background: black;
       color: #444;
       overflow: hidden;
       font: 16px Raleway;
       margin: 0;
+      width: 100%;
+      height: 100%;
     }
 
     h1 {
@@ -86,16 +88,21 @@ export default () => (
 
     #editor { 
       position: absolute;
-      top: 0;
+      top: 64px;
       right: 0;
       bottom: 0;
       left: 0;
       opacity: 0.8;
-      z-index: 200;
+      z-index: 300;
+    }
+
+    #editor * {
+      font: 12px/normal Monaco, Menlo, Ubuntu Mono, Consolas, source-code-pro, monospace;
     }
 
     .page-content {
       margin: 100px 40px;
+      text-align: center;
     }
 
     .error-container {
@@ -112,6 +119,10 @@ export default () => (
 
     .profile-img {
       width: 55px;
+    }
+
+    .hidden {
+      display: none;
     }
 
     .center {
@@ -170,12 +181,12 @@ export default () => (
     }
 
     footer {
-      color: #555;
       z-index: 100;
     }
 
     footer p {
       text-align: center;
+      color: #555;
     }
 
     .appear {
@@ -192,6 +203,10 @@ export default () => (
       to {
         opacity: 1;
       }
+    }
+
+    .md-btn {
+      margin-right: 10px;
     }
   `}</style>
 )
