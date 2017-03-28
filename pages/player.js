@@ -6,6 +6,7 @@ import FontIcon from 'react-md/lib/FontIcons'
 import TextField from 'react-md/lib/TextFields'
 import Toolbar from 'react-md/lib/Toolbars'
 import Page from '../layouts/default'
+import defaultPlayer from '../components/players/default'
 
 export default class Player extends React.Component {
   constructor () {
@@ -13,7 +14,7 @@ export default class Player extends React.Component {
 
     this.state = {
       name: '',
-      code: '',
+      code: defaultPlayer,
       editor: {
         visible: false
       }
@@ -25,7 +26,15 @@ export default class Player extends React.Component {
   }
 
   getInitialState () {
-    return JSON.parse(localStorage.getItem('Player') || '{}')
+    const defaultState =  {
+      name: '',
+      code: defaultPlayer,
+      editor: {
+        visible: false
+      }
+    }
+    const state = JSON.parse(localStorage.getItem('Player'))
+    return state || defaultState
   }
 
   restore () {
