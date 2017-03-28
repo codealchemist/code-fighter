@@ -1,0 +1,10 @@
+@import '../node_modules/react-md/src/scss/_react-md';
+
+$md-light-theme: false;
+$md-primary-color: $md-light-blue-500;
+$md-secondary-color: $md-deep-orange-a-200;
+
+@include react-md-everything;
+
+// Or for a subsection
+@include react-md-theme-everything($md-light-blue-500, $md-deep-orange-a-200, false, 'custom-theme');

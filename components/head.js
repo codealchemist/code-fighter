@@ -24,9 +24,12 @@ export default ({ children, title = 'Code Fighter' }) => (
       { /* Google Fonts */ }
       <link href='//fonts.googleapis.com/css?family=Raleway' rel='stylesheet' />
       <link href='//fonts.googleapis.com/css?family=Dancing+Script' rel='stylesheet' />
+      <link href='//fonts.googleapis.com/css?family=Roboto:300,400,500' rel='stylesheet' />
+      <link href='//fonts.googleapis.com/css?family=Material+Icons' rel='stylesheet' />
 
       { /* Library Styles */ }
       <link href='//alertifyjs.com/build/css/alertify.css' rel='stylesheet' />
+      <link href='/static/theme.css' rel='stylesheet' />
 
       { /* Library JS */ }
       <script src='//cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js' />
