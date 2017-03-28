@@ -26,7 +26,7 @@ export default class Player extends React.Component {
   }
 
   getInitialState () {
-    const defaultState =  {
+    const defaultState = {
       name: '',
       code: defaultPlayer,
       editor: {
