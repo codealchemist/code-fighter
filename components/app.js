@@ -62,6 +62,7 @@ export default class App extends React.Component {
     })
 
     socket.on('update_finish', (data) => {
+      this.frames.length = 0
       this.frames = this.frames.concat(JSON.parse(data))
     })
 

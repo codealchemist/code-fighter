@@ -91,6 +91,9 @@ export default class Player extends React.Component {
     console.log('save', this.state)
     fetch('http://localhost:3001/player', {
       method: 'post',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8'
+      },
       body: JSON.stringify({
         username: this.state.name,
         code: this.state.code
