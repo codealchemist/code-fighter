@@ -5,7 +5,7 @@ import Page from '../layouts/default'
 
 export default class Index extends React.Component {
   componentDidMount () {
-    // alertify.success('Hey! Cool!')
+    
   }
 
   render () {
