@@ -1,6 +1,5 @@
 import React from 'react'
 import Head from 'next/head'
-import FontIcon from 'react-md/lib/FontIcons'
 import TextField from 'react-md/lib/TextFields'
 import Page from '../layouts/default'
 import Store from '../components/store'
@@ -67,7 +66,7 @@ export default class Player extends React.Component {
             label='Server URL'
             style={{margin: 'auto'}}
             lineDirection='center'
-            placeholder="code-fighter-server url"
+            placeholder='code-fighter-server url'
             className='md-cell md-cell--bottom'
             value={this.state.serverUrl}
             onChange={(value) => this.updateServerUrl(value)}
