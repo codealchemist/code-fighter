@@ -1,10 +1,13 @@
 import React from 'react'
 import Arena from './arena.js'
 import MDSpinner from 'react-md-spinner'
+import Store from '../components/store'
 
 export default class App extends React.Component {
   constructor () {
     super()
+
+    this.store = new Store()
 
     // Create arena adding players to it.
     this.arena = new Arena()
@@ -51,7 +54,10 @@ export default class App extends React.Component {
   }
 
   initSocket () {
-    const serverUrl = '//localhost:3001'
+    const server = JSON.parse(this.store.get('server'))
+    console.log('server: ', server)
+    const serverUrl = server.serverUrl || '//localhost:3001'
+    console.log('--  server url: ', serverUrl)
     const socket = io(serverUrl)
 
     socket.on('event', (data) => {})

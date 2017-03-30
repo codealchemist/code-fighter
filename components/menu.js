@@ -56,6 +56,7 @@ export default class Menu extends React.Component {
         <Link href='/tutorial'><a style={styles.menuItem}>Tutorial</a></Link>
         <Link href='/arena'><a style={styles.menuItem}>Open Arena</a></Link>
         <Link href='/player'><a style={styles.menuItem}>Player</a></Link>
+        <Link href='/server'><a style={styles.menuItem}>Server</a></Link>
         <Link href='/contact'><a style={styles.menuItem}>Contact</a></Link>
         <Link href='/about'><a style={styles.menuItem}>About</a></Link>
       </BurgerMenu>

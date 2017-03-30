@@ -6,6 +6,7 @@ import FontIcon from 'react-md/lib/FontIcons'
 import TextField from 'react-md/lib/TextFields'
 import Toolbar from 'react-md/lib/Toolbars'
 import Page from '../layouts/default'
+import Store from '../components/store'
 import defaultPlayer from '../components/players/default'
 
 export default class Player extends React.Component {
@@ -20,6 +21,7 @@ export default class Player extends React.Component {
       }
     }
     this.state.saveButton = this.getSaveButton()
+    this.store = new Store()
 
     this.nav = <Button icon onClick={() => this.closeEditor()}>close</Button>
     this.action = <Button flat label='Save' onClick={() => this.closeEditor()} />
@@ -33,7 +35,7 @@ export default class Player extends React.Component {
         visible: false
       }
     }
-    const state = JSON.parse(localStorage.getItem('Player'))
+    const state = JSON.parse(this.store.get('player'))
     return state || defaultState
   }
 
@@ -45,7 +47,7 @@ export default class Player extends React.Component {
   }
 
   saveState () {
-    localStorage.setItem('Player', JSON.stringify(this.state))
+    this.store.set('player', JSON.stringify(this.state))
   }
 
   static getInitialProps ({ res, xhr }) {
@@ -89,8 +91,15 @@ export default class Player extends React.Component {
 
   save () {
     console.log('save', this.state)
-    fetch('http://localhost:3001/player', {
+    const server = JSON.parse(this.store.get('server'))
+    const serverUrl = server.serverUrl || '//localhost:3001'
+
+    fetch(`${serverUrl}/player`, {
       method: 'post',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
         username: this.state.name,
         code: this.state.code
