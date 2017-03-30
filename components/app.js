@@ -54,7 +54,10 @@ export default class App extends React.Component {
   }
 
   initSocket () {
-    const serverUrl = this.store.get('server') || '//localhost:3001'
+    const server = JSON.parse(this.store.get('server'))
+    console.log('server: ', server)
+    const serverUrl = server.serverUrl || '//localhost:3001'
+    console.log('--  server url: ', serverUrl)
     const socket = io(serverUrl)
 
     socket.on('event', (data) => {})

@@ -91,8 +91,15 @@ export default class Player extends React.Component {
 
   save () {
     console.log('save', this.state)
-    fetch('http://localhost:3001/player', {
+    const server = JSON.parse(this.store.get('server'))
+    const serverUrl = server.serverUrl || '//localhost:3001'
+
+    fetch(`${serverUrl}/player`, {
       method: 'post',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
         username: this.state.name,
         code: this.state.code
