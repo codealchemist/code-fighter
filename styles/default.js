@@ -140,6 +140,18 @@ export default () => (
       display: none;
     }
 
+    .circle-picker {
+      justify-content: center;
+      align-items: center;
+      margin: auto !important;
+      padding-bottom: 20px
+    }
+
+    .circle-picker span {
+      // margin: auto;
+      align-self: center;
+    }
+
     .center {
       margin: auto;
     }

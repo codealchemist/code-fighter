@@ -4,13 +4,15 @@ import TextField from 'react-md/lib/TextFields'
 import Page from '../layouts/default'
 import Store from '../components/store'
 import CodeEditor from '../components/code-editor'
+import { CirclePicker } from 'react-color'
 
 export default class Player extends React.Component {
   constructor () {
     super()
 
     this.state = {
-      username: ''
+      username: '',
+      color: '#fff'
     }
 
     this.store = new Store('player')
@@ -54,6 +56,13 @@ export default class Player extends React.Component {
     this.saveState()
   }
 
+  onColor (color) {
+    console.log('- color: ', color)
+    this.state.color = color
+    this.setState(this.state)
+    this.saveState()
+  }
+
   render () {
     return (
       <div>
@@ -73,6 +82,11 @@ export default class Player extends React.Component {
             className='md-cell md-cell--bottom'
             value={this.state.username}
             onChange={(value) => this.updateUsername(value)}
+          />
+
+          <CirclePicker
+            color={ this.state.color }
+            onChangeComplete={ (color) => this.onColor(color) }
           />
 
           <CodeEditor username={this.state.username} />
