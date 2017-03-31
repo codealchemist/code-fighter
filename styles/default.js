@@ -106,7 +106,7 @@ export default () => (
 
     .icon-button {
       min-width: 20px;
-      padding: 7px 7px;
+      padding: 6px 6px;
     }
 
     .tr-button {
