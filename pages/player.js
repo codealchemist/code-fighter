@@ -85,8 +85,8 @@ export default class Player extends React.Component {
           />
 
           <CirclePicker
-            color={ this.state.color }
-            onChangeComplete={ (color) => this.onColor(color) }
+            color={this.state.color}
+            onChangeComplete={(color) => this.onColor(color)}
           />
 
           <CodeEditor username={this.state.username} />
