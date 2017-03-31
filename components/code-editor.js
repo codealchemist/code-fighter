@@ -80,6 +80,10 @@ export default class CodeEditor extends React.Component {
   }
 
   save () {
+    this.state.code = this.editor.getValue()
+    this.setState(this.state)
+    this.saveState()
+    
     console.log('save', this.state, this.props)
     if (!this.state.code || !this.props.username) {
       console.error('ERROR: code and name must be set!')
