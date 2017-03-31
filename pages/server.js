@@ -11,14 +11,14 @@ export default class Player extends React.Component {
     this.state = {
       serverUrl: 'htpp://localhost:3001'
     }
-    this.store = new Store()
+    this.store = new Store('server')
   }
 
   getInitialState () {
     const defaultState = {
       serverUrl: 'htpp://localhost:3001'
     }
-    const state = JSON.parse(this.store.get('server'))
+    const state = this.store.get()
     return state || defaultState
   }
 
@@ -29,7 +29,7 @@ export default class Player extends React.Component {
   }
 
   saveState () {
-    this.store.set('server', JSON.stringify(this.state))
+    this.store.set(this.state)
   }
 
   static getInitialProps ({ res, xhr }) {
