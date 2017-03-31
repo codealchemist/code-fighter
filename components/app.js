@@ -7,7 +7,7 @@ export default class App extends React.Component {
   constructor () {
     super()
 
-    this.store = new Store()
+    this.serverStore = new Store('server')
 
     // Create arena adding players to it.
     this.arena = new Arena()
@@ -54,8 +54,7 @@ export default class App extends React.Component {
   }
 
   initSocket () {
-    const server = JSON.parse(this.store.get('server'))
-    console.log('server: ', server)
+    const server = this.serverStore.get() || {serverUrl: null}
     const serverUrl = server.serverUrl || '//localhost:3001'
     console.log('--  server url: ', serverUrl)
     const socket = io(serverUrl)

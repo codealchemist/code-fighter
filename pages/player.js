@@ -1,53 +1,38 @@
 import React from 'react'
 import Head from 'next/head'
-import 'isomorphic-fetch'
-import Button from 'react-md/lib/Buttons/Button'
-import FontIcon from 'react-md/lib/FontIcons'
 import TextField from 'react-md/lib/TextFields'
-import Toolbar from 'react-md/lib/Toolbars'
 import Page from '../layouts/default'
 import Store from '../components/store'
-import defaultPlayer from '../components/players/default'
+import CodeEditor from '../components/code-editor'
 
 export default class Player extends React.Component {
   constructor () {
     super()
 
     this.state = {
-      name: '',
-      code: defaultPlayer,
-      editor: {
-        visible: false
-      }
+      username: ''
     }
-    this.state.saveButton = this.getSaveButton()
-    this.store = new Store()
 
-    this.nav = <Button icon onClick={() => this.closeEditor()}>close</Button>
-    this.action = <Button flat label='Save' onClick={() => this.closeEditor()} />
+    this.store = new Store('player')
   }
 
   getInitialState () {
     const defaultState = {
-      name: '',
-      code: defaultPlayer,
-      editor: {
-        visible: false
-      }
+      username: ''
     }
-    const state = JSON.parse(this.store.get('player'))
+    const state = this.store.get()
+    console.log('- player initial state:', state)
     return state || defaultState
   }
 
   restore () {
     console.log('RESTORE')
     this.state = this.getInitialState()
-    this.state.saveButton = this.getSaveButton()
     this.setState(this.state)
   }
 
   saveState () {
-    this.store.set('player', JSON.stringify(this.state))
+    this.store.set(this.state)
   }
 
   static getInitialProps ({ res, xhr }) {
@@ -60,72 +45,11 @@ export default class Player extends React.Component {
   }
 
   componentDidMount () {
-    this.initEditor()
     this.restore()
   }
 
-  initEditor () {
-    setTimeout(() => {
-      this.editor = ace.edit('editor')
-      this.editor.setTheme('ace/theme/monokai')
-      this.editor.getSession().setMode('ace/mode/javascript')
-      this.editor.$blockScrolling = 'Infinity'
-      this.editor.setValue(this.state.code || '')
-    })
-  }
-
-  openEditor () {
-    if (!this.editor) this.initEditor()
-    this.state.editor.visible = true
-    this.setState(this.state)
-    this.saveState()
-  }
-
-  closeEditor () {
-    this.state.editor.visible = false
-    this.state.code = this.editor.getValue()
-    this.state.saveButton = this.getSaveButton()
-    this.setState(this.state)
-    this.saveState()
-  }
-
-  save () {
-    console.log('save', this.state)
-    const server = JSON.parse(this.store.get('server'))
-    const serverUrl = server.serverUrl || '//localhost:3001'
-
-    fetch(`${serverUrl}/player`, {
-      method: 'post',
-      headers: {
-        'Accept': 'application/json, text/plain, */*',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        username: this.state.name,
-        code: this.state.code
-      })
-    })
-  }
-
-  getSaveButton () {
-    if (this.state.name && this.state.code) {
-      return (
-        <Button raised primary label='Save' onClick={() => this.save()}>
-          <FontIcon>save</FontIcon>
-        </Button>
-      )
-    }
-
-    return (
-      <Button raised disabled label='Save' onClick={() => this.save()}>
-        <FontIcon>save</FontIcon>
-      </Button>
-    )
-  }
-
-  updateName (name) {
-    this.state.name = name.trim().replace(/[ =\/\\\?|`'"<>]/, '') // eslint-disable-line
-    this.state.saveButton = this.getSaveButton()
+  updateUsername (username) {
+    this.state.username = username.trim().replace(/[ =\/\\\?|`'"<>]/, '') // eslint-disable-line
     this.setState(this.state)
     this.saveState()
   }
@@ -137,18 +61,6 @@ export default class Player extends React.Component {
           <link href='//fonts.googleapis.com/css?family=Material+Icons' rel='stylesheet' />
         </Head>
 
-        <div className={this.state.editor.visible ? '' : 'hidden'}>
-          <Toolbar
-            colored
-            nav={this.nav}
-            actions={this.action}
-            style={{zIndex: 300}}
-            title='Code Editor'
-            fixed
-          />
-          <div id='editor' />
-        </div>
-
         <Page>
           <h2>Player</h2>
 
@@ -159,15 +71,11 @@ export default class Player extends React.Component {
             lineDirection='center'
             placeholder="Your player's name"
             className='md-cell md-cell--bottom'
-            value={this.state.name}
-            onChange={(value) => this.updateName(value)}
+            value={this.state.username}
+            onChange={(value) => this.updateUsername(value)}
           />
 
-          <Button raised secondary label='Code Editor' onClick={() => this.openEditor()}>
-            <FontIcon>code</FontIcon>
-          </Button>
-
-          {this.state.saveButton}
+          <CodeEditor username={this.state.username} />
         </Page>
       </div>
     )

@@ -88,7 +88,7 @@ export default () => (
 
     #editor { 
       position: absolute;
-      top: 64px;
+      top: 56px;
       right: 0;
       bottom: 0;
       left: 0;
@@ -98,6 +98,21 @@ export default () => (
 
     #editor * {
       font: 12px/normal Monaco, Menlo, Ubuntu Mono, Consolas, source-code-pro, monospace;
+    }
+
+    .code-editor-btn {
+      z-index: 110;
+    }
+
+    .icon-button {
+      min-width: 20px;
+      padding: 7px 7px;
+    }
+
+    .tr-button {
+      position: absolute;
+      top: 30px;
+      right: 30px;
     }
 
     .page-content {
