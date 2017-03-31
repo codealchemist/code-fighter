@@ -1,6 +1,5 @@
 import React from 'react'
 import Head from 'next/head'
-import FontIcon from 'react-md/lib/FontIcons'
 import TextField from 'react-md/lib/TextFields'
 import Page from '../layouts/default'
 import Store from '../components/store'

@@ -5,7 +5,7 @@ import Store from '../components/store'
 import CodeEditor from '../components/code-editor'
 
 export default class Index extends React.Component {
-  constructor() {
+  constructor () {
     super()
     this.state = {
       username: null
@@ -13,7 +13,7 @@ export default class Index extends React.Component {
     this.playerStore = new Store('player')
   }
 
-  componentDidMount() {
+  componentDidMount () {
     const username = this.playerStore.get('username')
     this.state.username = username
     this.setState(this.state)

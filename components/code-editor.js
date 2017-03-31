@@ -7,10 +7,10 @@ import 'isomorphic-fetch'
 import defaultPlayer from '../components/players/default'
 
 export default class CodeEditor extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.props = props
-    
+
     this.store = new Store('code-editor')
     this.serverStore = new Store('server')
     this.state = {
@@ -111,16 +111,18 @@ export default class CodeEditor extends React.Component {
       className += ' icon-button tr-button'
     }
 
-    if (this.props.username) return (
-      <Button
-        className={className}
-        raised secondary
-        label={label}
-        onClick={() => this.openEditor()}
-      >
-        <FontIcon>code</FontIcon>
-      </Button>
-    )
+    if (this.props.username) {
+      return (
+        <Button
+          className={className}
+          raised secondary
+          label={label}
+          onClick={() => this.openEditor()}
+        >
+          <FontIcon>code</FontIcon>
+        </Button>
+      )
+    }
 
     return (
       <Button
@@ -135,8 +137,6 @@ export default class CodeEditor extends React.Component {
   }
 
   render () {
-
-
     return (
       <span>
         <div className={this.state.editor.visible ? '' : 'hidden'}>
