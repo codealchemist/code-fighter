@@ -15,6 +15,7 @@ export default class CodeEditor extends React.Component {
     this.serverStore = new Store('server')
     this.state = {
       code: defaultPlayer,
+      color: 'blue',
       editor: {
         visible: false
       }
@@ -27,6 +28,7 @@ export default class CodeEditor extends React.Component {
   getInitialState () {
     const defaultState = {
       code: defaultPlayer,
+      color: 'blue',
       editor: {
         visible: false
       }
@@ -84,15 +86,17 @@ export default class CodeEditor extends React.Component {
     this.setState(this.state)
     this.saveState()
 
-    console.log('save', this.state, this.props)
-    if (!this.state.code || !this.props.username) {
-      console.error('ERROR: code and name must be set!')
-      return
-    }
-
     const server = this.serverStore.get() || {serverUrl: null}
     console.log('- server', server)
     const serverUrl = server.serverUrl || '//localhost:3001'
+
+    console.log('-- save, STATE', this.state)
+    console.log('-- save, PROPS: ', this.props)
+    console.log('-- GUID: ', server.guid)
+    if (!this.state.code || !this.props.username || !server.guid) {
+      console.error('ERROR: code, name and guid must be set!')
+      return
+    }
 
     fetch(`${serverUrl}/player`, {
       method: 'post',
@@ -102,7 +106,9 @@ export default class CodeEditor extends React.Component {
       },
       body: JSON.stringify({
         username: this.props.username,
-        code: this.state.code
+        code: this.state.code,
+        color: this.props.color,
+        guid: server.guid
       })
     })
   }

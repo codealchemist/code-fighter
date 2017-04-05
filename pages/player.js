@@ -12,7 +12,8 @@ export default class Player extends React.Component {
 
     this.state = {
       username: '',
-      color: '#fff'
+      color: 'blue',
+      guid: null
     }
 
     this.store = new Store('player')
@@ -20,7 +21,9 @@ export default class Player extends React.Component {
 
   getInitialState () {
     const defaultState = {
-      username: ''
+      username: '',
+      color: 'blue',
+      guid: null
     }
     const state = this.store.get()
     console.log('- player initial state:', state)
@@ -89,7 +92,7 @@ export default class Player extends React.Component {
             onChangeComplete={(color) => this.onColor(color)}
           />
 
-          <CodeEditor username={this.state.username} />
+          <CodeEditor username={this.state.username} color={this.state.color.hex} />
         </Page>
       </div>
     )

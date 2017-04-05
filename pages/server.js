@@ -1,22 +1,32 @@
 import React from 'react'
 import Head from 'next/head'
 import TextField from 'react-md/lib/TextFields'
+import FontIcon from 'react-md/lib/FontIcons'
+import Button from 'react-md/lib/Buttons/Button'
+import MDSpinner from 'react-md-spinner'
 import Page from '../layouts/default'
 import Store from '../components/store'
+import App from '../components/app'
 
 export default class Player extends React.Component {
   constructor () {
     super()
 
     this.state = {
-      serverUrl: 'htpp://localhost:3001'
+      serverUrl: 'htpp://localhost:3001',
+      connected: false,
+      connecting: false,
+      guid: null
     }
     this.store = new Store('server')
   }
 
   getInitialState () {
     const defaultState = {
-      serverUrl: 'htpp://localhost:3001'
+      serverUrl: 'http://localhost:3001',
+      connected: false,
+      connecting: false,
+      guid: null
     }
     const state = this.store.get()
     return state || defaultState
@@ -26,6 +36,11 @@ export default class Player extends React.Component {
     console.log('RESTORE')
     this.state = this.getInitialState()
     this.setState(this.state)
+
+    // Reconnect socket if it was previously connected.
+    if (this.state.connected || this.state.connecting) {
+      this.initSocket()
+    }
   }
 
   saveState () {
@@ -51,6 +66,87 @@ export default class Player extends React.Component {
     this.saveState()
   }
 
+  setGuid (guid) {
+    this.state.guid = guid
+    this.setState(this.state)
+    this.saveState()
+  }
+
+  initSocket () {
+    console.log('--  CONNECT SERVER / URL: ', this.state.serverUrl)
+    this.state.connecting = true
+    this.setState(this.state)
+    this.saveState()
+
+    this.socket = io(this.state.serverUrl)
+
+    this.socket.on('event', (data) => {})
+    this.socket.on('disconnect', () => {})
+    this.socket.on('connect', () => {
+      console.log('-- server connected')
+      this.state.connecting = false
+      this.state.connected = true
+      this.setState(this.state)
+      this.saveState()
+    })
+
+    this.socket.on('handshake', (guid) => {
+      console.log('-- got handshake', guid)
+      this.setGuid(guid)
+    })
+
+    this.socket.on('player_error', (error) => {
+      console.log('-- got error', error)
+      // this.setError(error)
+    })
+
+    this.socket.on('disconnect', () => {
+      console.log('disconnect')
+      this.state.connecting = false
+      this.state.connected = false
+      this.setState(this.state)
+      this.saveState()
+    })
+  }
+
+  connect () {
+    this.initSocket()
+  }
+
+  disconnect () {
+    this.socket.disconnect()
+  }
+
+  getButton () {
+    if (this.state.connecting) {
+      return (
+        <MDSpinner userAgent='Gecko' size={30} className='abs-center' />
+      )
+    }
+
+    if (this.state.connected) {
+      return (
+        <Button
+          raised secondary
+          label='Disconnect'
+          onClick={() => this.disconnect()}
+        >
+          <FontIcon>wifi</FontIcon>
+        </Button>
+      )
+    }
+
+    return (
+      <Button
+        raised primary
+        label='Connect'
+        onClick={() => this.connect()}
+      >
+        <FontIcon>wifi</FontIcon>
+      </Button>
+    )
+  }
+
   render () {
     return (
       <div>
@@ -71,6 +167,8 @@ export default class Player extends React.Component {
             value={this.state.serverUrl}
             onChange={(value) => this.updateServerUrl(value)}
           />
+
+          {this.getButton()}
         </Page>
       </div>
     )
