@@ -53,6 +53,16 @@ export default class App extends React.Component {
     console.log('[ APP ]--> INIT')
   }
 
+  setConnectionGuid (guid) {
+    this.state.connectionGuid = guid
+    this.setState(this.state)
+    this.props.updateConnectionGuid(guid)
+  }
+
+  setError (error) {
+    // TODO
+  }
+
   initSocket () {
     const server = this.serverStore.get() || {serverUrl: null}
     const serverUrl = server.serverUrl || '//localhost:3001'
@@ -64,6 +74,16 @@ export default class App extends React.Component {
     socket.on('connect', () => {
       console.log('-- server connected')
       this.setConnected()
+    })
+
+    socket.on('handshake', (guid) => {
+      console.log('-- got handshake', guid)
+      this.setConnectionGuid(guid)
+    })
+
+    socket.on('player_error', (error) => {
+      console.log('-- got error', error)
+      this.setError(error)
     })
 
     socket.on('update_finish', (data) => {

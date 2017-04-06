@@ -19,12 +19,23 @@ export default class Index extends React.Component {
     this.setState(this.state)
   }
 
+  updateConnectionGuid (guid) {
+    console.log('- ARENA: updating connection guid:', guid)
+    this.state.connectionGuid = guid
+    this.setState(this.state)
+  }
+
   render () {
     return (
       <div>
         <Page>
-          <CodeEditor username={this.state.username} icon />
-          <App />
+          <CodeEditor
+            username={this.state.username}
+            connectionGuid={this.state.connectionGuid} 
+            icon 
+          />
+
+          <App updateConnectionGuid={(guid) => this.updateConnectionGuid(guid)} />
         </Page>
       </div>
     )
