@@ -2,7 +2,7 @@
   "name": "code-fighter",
   "version": "1.0.0",
   "description": "Fight against other developters commanding your hero with JavaScript!",
-  "main": "index.js",
+  "main": "pages/index.js",
   "scripts": {
     "test": "standard",
     "lint-focus": "standard-focus",

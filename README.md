@@ -3,6 +3,10 @@ Fight against other developters commanding your hero with JavaScript!
 
 [![Build Status](https://travis-ci.org/codealchemist/code-fighter.svg?branch=master)](https://travis-ci.org/codealchemist/code-fighter)
 
+## Latest build
+
+[https://code-fighter-vslxcthvfh.now.sh](https://code-fighter-vslxcthvfh.now.sh)
+
 
 ## Notes
 
