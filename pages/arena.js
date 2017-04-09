@@ -31,8 +31,8 @@ export default class Index extends React.Component {
         <Page>
           <CodeEditor
             username={this.state.username}
-            connectionGuid={this.state.connectionGuid} 
-            icon 
+            connectionGuid={this.state.connectionGuid}
+            icon
           />
 
           <App updateConnectionGuid={(guid) => this.updateConnectionGuid(guid)} />

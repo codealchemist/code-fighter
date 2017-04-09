@@ -61,6 +61,7 @@ export default class App extends React.Component {
 
   setError (error) {
     // TODO
+    this.error = error
   }
 
   initSocket () {

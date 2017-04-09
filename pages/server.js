@@ -6,7 +6,6 @@ import Button from 'react-md/lib/Buttons/Button'
 import MDSpinner from 'react-md-spinner'
 import Page from '../layouts/default'
 import Store from '../components/store'
-import App from '../components/app'
 
 export default class Player extends React.Component {
   constructor () {
